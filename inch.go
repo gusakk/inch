@@ -18,6 +18,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"math/rand"
 	"time"
 
 	"github.com/influxdata/influxdb/client/v2"
@@ -307,6 +308,9 @@ func (s *Simulator) BatchN() int {
 func (s *Simulator) generateBatches() <-chan []byte {
 	ch := make(chan []byte, 10)
 
+	s1 := rand.NewSource(time.Now().UnixNano())
+    r1 := rand.New(s1)
+
 	go func() {
 		values := make([]int, len(s.Tags))
 		lastWrittenTotal := s.WrittenN()
@@ -324,7 +328,8 @@ func (s *Simulator) generateBatches() <-chan []byte {
 			if i < s.FieldsPerPoint-1 {
 				delim = ","
 			}
-			fields = append(fields, []byte(fmt.Sprintf("v%d=1%s", i, delim))...)
+			value := r1.Intn(10000000)
+			fields = append(fields, []byte(fmt.Sprintf("v%d=%d%s", i, value, delim))...)
 		}
 
 		// Size internal buffer to consider mx+tags+ +fields.
