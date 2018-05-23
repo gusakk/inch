@@ -1,0 +1,12 @@
+hash: c4412b8dbf60542a0cfdbc720155a05a6d2ecc81ab7ec568beac6222a336f080
+updated: 2018-05-23T13:50:36.410106178+03:00
+imports:
+- name: github.com/influxdata/inch
+  version: 4e18c4b431946944caa289181f9dc7d7e4416c98
+- name: github.com/influxdata/influxdb
+  version: e62b1a02fb8e218c64fea5e34a39f74d1eaef60b
+  subpackages:
+  - client/v2
+  - models
+  - pkg/escape
+testImports: []
